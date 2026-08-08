@@ -1,9 +1,9 @@
- ##🚗 Sistema de Aluguel de Veículos
+## 🚗 Sistema de Aluguel de Veículos
 
 Sistema de gerenciamento de locadora de veículos desenvolvido em Python,
 com cadastro de veículos, clientes, controle de aluguéis e relatórios financeiros.
 
- ##📋 Funcionalidades
+## 📋 Funcionalidades
 
 - Cadastrar, editar, listar e remover veículos
 - Cadastrar, editar, listar e remover clientes
@@ -15,7 +15,7 @@ com cadastro de veículos, clientes, controle de aluguéis e relatórios finance
 - Consulta financeira por cliente
 - Dados salvos automaticamente em arquivos JSON
 
- ##🛠️ Tecnologias utilizadas
+## 🛠️ Tecnologias utilizadas
 
 - Python 3
 - JSON (persistência de dados)
