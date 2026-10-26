@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Veículo</title>
+    <link rel="stylesheet" href="aluguel.css">
+</head>
+<body>
+    <header>
+        <h1>Cadastrar Veículo</h1>
+    </header>
+
+    <main>
+        <p>Preencha o formulário abaixo para cadastrar um novo veículo.</p>
+        <form> <!--(form) É o elemento que agrupa os campos que o usuário vai preencher
+            "Aqui dentro existe um formulário para o usuário preencher."-->
+
+            <label for="marca">Marca:</label> <!--(label)Ele mostra para o usuário o que ele deve informar naquele campo.
+            O for="marca" indica que esse texto está relacionado ao campo que possui:-->
+            <input type="text" id="marca" name="marca" required>
+
+            <label for="modelo">Modelo:</label> <!--type significa 'tipo', ele diz ao HTML qual tipo de campo você quer criar.-->
+            <input type="text" id="modelo" name="modelo" required>
+
+            <label for="placa">Placa:</label>
+            <input type="text" id="placa" name="placa" required>
+             
+             <label for="preco_dia">Preço por dia (R$):</label>
+             <input type="number" id="preco_dia" name="preco_dia" step="0.01" min="0" required>
+
+            <label for="ano">Ano:</label>
+            <input type="number" id="ano" name="ano" required>
+
+            <label for="cor">Cor:</label>
+            <input type="text" id="cor" name="cor" required>
+
+            <label for="renavam">Renavam:</label>
+            <input type="text" id="renavam" name="renavam" required>
+            
+            <label for="quilometragem">Quilometragem:</label>
+            <input type="number" id="quilometragem" name="quilometragem" required>
+
+
+  
+            <button type="submit">Cadastrar</button>
+        </form>
+    </main>
+
+    <footer>
+        <p class="destaque"><a href="index.html">Voltar ao menu principal</a></p>
+    </footer>
+</body>
+</html>

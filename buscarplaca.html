@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buscar Veículo por Placa</title>
+<link rel="stylesheet" href="aluguel.css">
+</head>
+<body>
+<header>
+<h1>Buscar Veículo por Placa</h1>
+</header>
+
+<main>
+<p>Digite a placa do veículo que deseja consultar.</p>
+
+<!--
+  Busca é uma operação de LEITURA (não altera dados), então o método
+  correto aqui é GET, não POST. Isso também tem uma vantagem prática:
+  com GET, a placa buscada aparece na URL (ex: buscarplaca.html?placa=ABC1D23),
+  o que permite recarregar a página ou compartilhar o link direto do resultado.
+
+  No backend, isso seria capturado com request.args.get("placa") no Flask,
+  em vez de request.form["placa"] (que é usado em formulários POST, como
+  os de cadastro que já fizemos).
+-->
+
+<form action="/buscar-placa" method="get">
+<div class="campo">
+<label for="placa">Placa:</label>
+<input type="text" id="placa" name="placa" placeholder="ABC1D23" required>
+</div>
+
+<button type="submit">Buscar</button>
+</form>
+
+<!--
+  A partir daqui, o resultado é dado de EXEMPLO — assim como fizemos na
+  tabela da frota, é só pra ilustrar como o resultado apareceria.
+
+  Com Jinja2, ficaria algo como:
+
+      {% if veiculo %}
+        <div class="resultado-busca status-{{ 'danificado' if veiculo.danificado
+             else ('alugado' if veiculo.alugado else 'disponivel') }}">
+          ...
+        </div>
+      {% elif buscou %}
+        <p>Nenhum veículo encontrado com a placa informada.</p>
+      {% endif %}
+
+  O "buscou" evita mostrar a mensagem de erro antes do usuário ter
+  buscado alguma coisa.
+-->
+<div class="resultado-busca status-disponivel">
+  <h2>Toyota Corolla (2022)</h2>
+  <p><strong>Placa:</strong> ABC1D23</p>
+  <p><strong>Cor:</strong> Prata</p>
+  <p><strong>Quilometragem:</strong> 15.000 km</p>
+  <p><strong>Preço por dia:</strong> R$ 150,00</p>
+  <p><strong>Status:</strong> Disponível</p>
+</div>
+
+</main>
+
+<footer>
+<p class="destaque"><a href="index.html">Voltar ao menu principal</a></p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Um programa simples para gerenciar locação de veículos.">
+<meta name="keywords" content="locação de veículos, aluguel, gerenciador">
+<meta name="author" content="LeonardoSeverino">
+<title>Gestão para Locadora de Veículos</title>
+
+<!-- link contendo o arquivo do CSS de aluguel de veículos-->
+<link rel="stylesheet" href="aluguel.css">
+</head>
+<body>
+<!-- header é para o título principal da página -->
+<header>
+<h1>Gerenciador de Locadora de Veículos</h1>
+</header>
+
+<div class="banner"> <!-- div é para agrupar os elementos do banner (nav do site) -->
+<nav aria-label="Menu do site">
+<ul class="nav-site">
+<li><a href="inicio.html">Início</a></li>
+<li><a href="index.html" aria-current="page">Gerenciador</a></li>
+<li><a href="contato.html">Contato</a></li>
+</ul>
+</nav>
+</div>
+
+<main>
+<p>Bem-vindo ao gerenciador de locação de veículos!
+    Aqui, você tem controle total: cadastre, consulte,
+    atualize ou exclua informações sobre os veículos disponíveis, 
+    além de gerenciar clientes e emitir relatórios.</p>
+
+<nav aria-label="Categorias do sistema">
+<!-- Categoria: Veículos -->
+<div class="menu-category">
+<h2>VEÍCULOS</h2>
+<ul>
+<li><a href="cadastrarveiculo.html">Cadastrar veículo</a></li>
+<li><a href="consultarfrota.html">Consultar frota</a></li>
+<li><a href="alterarstatus.html">Alterar status</a></li>
+<li><a href="editarveiculo.html">Editar veículo</a></li>
+<li><a href="removerveiculo.html">Remover veículo</a></li>
+<li><a href="buscarplaca.html">Buscar por placa</a></li>
+<li><a href="filtrarveiculos.html">Filtrar veículos</a></li>
+</ul>
+<!-- div serve para agrupar os itens do menu --> 
+</div>
+
+<!-- Categoria: Clientes -->
+<div class="menu-category">
+<h2>CLIENTES</h2>
+<ul>
+<li><a href="cadastrarcliente.html">Cadastrar cliente</a></li>
+<li><a href="consultarclientes.html">Consultar clientes</a></li>
+<li><a href="editarcliente.html">Editar cliente</a></li>
+<li><a href="removercliente.html">Remover cliente</a></li>
+<li><a href="buscarcpf.html">Buscar por CPF</a></li>
+</ul>
+</div>
+
+<!-- Categoria: Financeiro -->
+<div class="menu-category">
+<h2>FINANCEIRO</h2>
+<ul>
+<li><a href="historicoalugueis.html">Histórico de aluguéis</a></li>
+<li><a href="consultarcliente.html">Consultar por cliente</a></li>
+</ul>
+</div>
+</nav>
+</main>
+
+<footer>
+<p class="destaque">Projeto em desenvolvimento, com fins de estudo.</p>
+</footer>
+</body>
+</html>

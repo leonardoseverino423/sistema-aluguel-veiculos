@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Filtrar Veículos</title>
+<link rel="stylesheet" href="aluguel.css">
+</head>
+<body>
+<header>
+<h1>Filtrar Veículos</h1>
+</header>
+
+<main>
+<p>Escolha um status para ver apenas os veículos correspondentes.</p>
+
+<!--
+  Assim como em buscarplaca.html, filtrar é uma operação de LEITURA,
+  então o método é GET. A opção escolhida vira parte da URL
+  (ex: filtrarveiculos.html?status=disponiveis), o que também permite
+  favoritar ou compartilhar um filtro específico.
+
+  No Flask: request.args.get("status") no lugar de request.form[...].
+-->
+
+<form action="/filtrar-veiculos" method="get">
+<fieldset>
+<legend>Filtrar por:</legend>
+
+<label class="opcao-radio">
+<input type="radio" name="status" value="disponiveis" checked>
+Disponíveis
+</label>
+
+<label class="opcao-radio">
+<input type="radio" name="status" value="alugados">
+Alugados
+</label>
+
+<label class="opcao-radio">
+<input type="radio" name="status" value="danificados">
+Danificados
+</label>
+</fieldset>
+
+<button type="submit">Filtrar</button>
+
+</form>
+
+<!--
+  A tabela abaixo tem dados de EXEMPLO (mesmo padrão de listarfrota.html),
+  mostrando como ficaria o resultado do filtro "Disponíveis".
+
+  Com Jinja2:
+
+      {% for v in veiculos_filtrados %}
+      <tr class="status-{{ status_escolhido }}">
+        <td>{{ v.marca }} {{ v.modelo }}</td>
+        <td>{{ v.ano }}</td>
+        <td>{{ v.placa }}</td>
+        <td>{{ v.quilometragem }} km</td>
+        <td>R$ {{ "%.2f"|format(v.preco_dia) }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5">Nenhum veículo encontrado para este filtro.</td></tr>
+      {% endfor %}
+-->
+<table>
+  <thead>
+    <tr>
+      <th>Veículo</th>
+      <th>Ano</th>
+      <th>Placa</th>
+      <th>Quilometragem</th>
+      <th>Preço/dia</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="status-disponivel">
+      <td>Toyota Corolla</td>
+      <td>2022</td>
+      <td>ABC1D23</td>
+      <td>15.000 km</td>
+      <td>R$ 150,00</td>
+    </tr>
+    <tr class="status-disponivel">
+      <td>Jeep Renegade</td>
+      <td>2023</td>
+      <td>XYZ9L45</td>
+      <td>8.400 km</td>
+      <td>R$ 190,00</td>
+    </tr>
+  </tbody>
+</table>
+
+</main>
+
+<footer>
+<p class="destaque"><a href="index.html">Voltar ao menu principal</a></p>
+</footer>
+</body>
+</html>

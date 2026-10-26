@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remover Veículo</title>
+    <link rel="stylesheet" href="aluguel.css">
+</head>
+<body>
+    <header>
+        <h1>Remover Veículo</h1>
+    </header>
+
+    <main>
+        <p>Selecione o veículo que deseja excluir.</p>
+        <form>
+            <label for="veiculo">Veículo:</label>
+            <select id="veiculo" name="veiculo" required>
+                <option value="">Selecione um veículo</option>
+                <option value="1">Veículo 1 - Modelo: XYZ, Placa: ABC1234</option>
+                <option value="2">Veículo 2 - Modelo: ABC, Placa: DEF5678</option>
+            </select>
+
+            <button type="submit">Excluir</button>
+        </form>
+    </main>
+
+    <footer>
+        <p class="destaque"><a href="index.html">Voltar ao menu principal</a></p>
+    </footer>
+
+    <script src="confirmar.js"></script>
+</body>
+</html>

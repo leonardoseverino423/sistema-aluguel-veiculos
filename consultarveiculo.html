@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultar Veículos</title>
+    <link rel="stylesheet" href="aluguel.css">
+</head>
+<body>
+    <header>
+        <h1>Consultar Veículos</h1>
+    </header>
+
+    <main>
+        <p>Selecione um veículo para visualizar suas informações.</p>
+        <form>
+            <label for="veiculo">Veículo:</label>
+            <select id="veiculo" name="veiculo" required>
+                <option value="">Selecione um veículo</option>
+                <option value="1">Veículo 1 - Modelo: XYZ, Placa: ABC1234</option>
+                <option value="2">Veículo 2 - Modelo: ABC, Placa: DEF5678</option>
+            </select>
+
+            <button type="submit">Consultar</button>
+        </form>
+
+        <div id="resultados">
+            <!-- Aqui serão exibidos os resultados da consulta -->
+        </div>
+    </main>
+
+    <footer>
+        <p class="destaque"><a href="index.html">Voltar ao menu principal</a></p>
+    </footer>
+</body>
+</html>

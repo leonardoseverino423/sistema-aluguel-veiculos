@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Veículo</title>
+    <link rel="stylesheet" href="aluguel.css">
+</head>
+<body>
+    <header>
+        <h1>Editar Veículo</h1>
+    </header>
+
+    <main>
+        <p>Selecione o veículo que deseja editar e preencha os campos com as novas informações.</p>
+        <form>
+            <label for="veiculo">Veículo:</label>
+            <select id="veiculo" name="veiculo" required>
+                <option value="">Selecione um veículo</option>
+                <option value="1">Veículo 1 - Modelo: XYZ, Placa: ABC1234</option>
+                <option value="2">Veículo 2 - Modelo: ABC, Placa: DEF5678</option>
+            </select>
+
+            <label for="marca">Marca:</label>
+            <input type="text" id="marca" name="marca" required>
+ 
+             <label for="preco_dia">Preço por dia (R$):</label>
+             <input type="number" id="preco_dia" name="preco_dia" step="0.01" min="0" required>
+
+            <label for="modelo">Modelo:</label>
+            <input type="text" id="modelo" name="modelo" required>
+
+            <label for="placa">Placa:</label>
+            <input type="text" id="placa" name="placa" required>
+
+            <label for="ano">Ano:</label>
+            <input type="number" id="ano" name="ano" required>
+
+            <label for="cor">Cor:</label>
+            <input type="text" id="cor" name="cor" required>
+
+            <label for="renavam">Renavam:</label>
+            <input type="text" id="renavam" name="renavam" required>
+             
+            <label for="quilometragem">Quilometragem:</label>
+            <input type="number" id="quilometragem" name="quilometragem" required>
+
+
+            <button type="submit">Salvar Alterações</button>
+        </form>
+    </main>
+
+    <footer>
+        <p class="destaque"><a href="index.html">Voltar ao menu principal</a></p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alterar Status do Veículo</title>
+<link rel="stylesheet" href="aluguel.css">
+</head>
+<body>
+<header>
+<h1>Alterar Status do Veículo</h1>
+</header>
+
+<main>
+<p>Selecione o veículo e a ação desejada.</p>
+
+<!--
+  Esta página espelha a função alterar_status() do Python, que trata
+  DUAS ações diferentes dentro da mesma tela:
+    1 - Status de aluguel (alugar ou devolver)
+    2 - Status de dano (marcar/desmarcar)
+
+  Assim como no terminal, o usuário escolhe a ação com um grupo de opções
+  (no Python era um menu numerado; aqui usamos radio buttons, que é o
+  equivalente em formulário HTML para "escolher 1 entre várias opções").
+
+  Os campos "Cliente" e "Dias de aluguel" só fazem sentido quando a ação
+  escolhida for "Alugar" — no Python isso é tratado com um "if not
+  veiculo.alugado". Aqui, por enquanto, os campos ficam sempre visíveis;
+  quando o formulário for conectado ao backend, a validação de qual campo
+  é obrigatório em cada caso é feita no Python, igual você já faz hoje.
+  (Opcionalmente, dá pra usar JavaScript no futuro para mostrar/esconder
+  esses campos dinamicamente conforme a opção escolhida — não é
+  necessário agora.)
+-->
+
+<form>
+
+<div class="campo">
+<label for="veiculo">Veículo:</label>
+<select id="veiculo" name="veiculo" required>
+<option value="">Selecione um veículo</option>
+<!--
+    {% for v in veiculos %}
+    <option value="{{ v.id }}">{{ v.marca }} {{ v.modelo }} — Placa: {{ v.placa }}</option>
+    {% endfor %}
+-->
+</select>
+</div>
+
+<fieldset>
+<legend>O que deseja fazer?</legend>
+
+<label class="opcao-radio">
+<input type="radio" name="acao" value="alugar" required>
+Alugar
+</label>
+
+<label class="opcao-radio">
+<input type="radio" name="acao" value="devolver">
+Devolver
+</label>
+
+<label class="opcao-radio">
+<input type="radio" name="acao" value="dano">
+Marcar/desmarcar dano
+</label>
+</fieldset>
+
+<div class="campo">
+<label for="cliente">Cliente (necessário apenas ao alugar):</label>
+<select id="cliente" name="cliente">
+<option value="">Selecione um cliente</option>
+<!--
+    {% for c in clientes %}
+    <option value="{{ c.id }}">{{ c.nome }} — CPF: {{ c.cpf }}</option>
+    {% endfor %}
+-->
+</select>
+</div>
+
+<div class="campo">
+<label for="dias">Dias de aluguel (necessário apenas ao alugar):</label>
+<input type="number" id="dias" name="dias" min="1">
+</div>
+
+<button type="submit">Confirmar</button>
+</form>
+
+</main>
+
+<footer>
+<p class="destaque"><a href="index.html">Voltar ao menu principal</a></p>
+</footer>
+
+<script src="alterarstatus.js"></script>
+</body>
+</html>
