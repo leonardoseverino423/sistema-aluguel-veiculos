@@ -1,56 +1,40 @@
-# 🚗 Sistema de Aluguel de Veículos
+# Sistema de Aluguel de Veículos
 
-Sistema de gerenciamento de locadora de veículos desenvolvido em Python, com cadastro de veículos, clientes, controle de aluguéis e relatórios financeiros.
+Sistema de gerenciamento de uma locadora de veículos, em desenvolvimento como projeto de estudo (faculdade de Ciência da Computação) e base para um futuro TCC.
 
-## 🎯 Objetivo do projeto
+> Projeto em desenvolvimento, com fins de estudo.
 
-Praticar, de forma aplicada, os conceitos de lógica de programação e orientação a objetos aprendidos no início da graduação em Programação de Computadores, simulando o controle real de uma locadora: cadastro de frota, gestão de clientes, processo de aluguel/devolução e acompanhamento financeiro — tudo via terminal, com persistência dos dados em arquivos.
+## O que o sistema faz
 
-## 📋 Funcionalidades
+- Cadastro de veículos e de clientes
+- Listagem da frota
+- Busca de veículo por placa
+- Filtro de veículos
+- Alteração de status do veículo (alugar, devolver, registrar dano)
+- Edição de cliente e remoção de veículo
+- Busca de cliente por CPF, com ou sem pontos e traço
 
-- Cadastrar, editar, listar e remover veículos
-- Cadastrar, editar, listar e remover clientes
-- Alugar e devolver veículos com cálculo automático do valor total
-- Controle de veículos danificados
-- Filtrar frota por status (disponível, alugado, danificado)
-- Buscar veículo por placa e cliente por CPF
-- Histórico de aluguéis com total arrecadado
-- Consulta financeira por cliente
-- Dados salvos automaticamente em arquivos JSON
+## Estrutura
 
-## 🛠️ Tecnologias utilizadas
+- **Back-end (Python):** programa de terminal com orientação a objetos (classes de veículo, cliente e aluguel) e dados salvos em JSON.
+- **Front-end (HTML, CSS e JavaScript):** páginas do sistema com tema preto e dourado. O JavaScript cuida de mostrar/ocultar campos e de pedir confirmação antes de excluir.
 
-- **Python 3** — lógica do sistema, classes e funções
-- **JSON** — persistência de dados (frota, clientes e aluguéis)
+Por enquanto, o front-end e o back-end ainda não estão conectados.
 
-## ▶️ Como executar
+## Como rodar o programa em Python
 
-```bash
-git clone https://github.com/leonardoseverino423/sistema-aluguel-veiculos.git
-cd sistema-aluguel-veiculos
-python sistema_aluguel.py
-```
+Requisito: Python 3.
 
-## 📁 Arquivos gerados
+Na pasta do projeto, execute `python3 "Locação-veiculo 0.5.py"` e siga o menu no terminal.
 
-| Arquivo | Conteúdo |
-|---|---|
-| `frota.json` | Veículos cadastrados |
-| `clientes.json` | Clientes cadastrados |
-| `alugueis.json` | Histórico de aluguéis |
+Para ver as páginas, abra o arquivo `index.html` no navegador.
 
-## 📚 Aprendizados
+## Próximos passos
 
-Este foi meu primeiro projeto completo, desenvolvido durante o 1º período da faculdade. Na prática, ele me ajudou a consolidar:
+- Conectar o front-end ao Python com Flask
+- Migrar o armazenamento de JSON para um banco de dados
+- Evoluir o projeto para o TCC e, depois, para um sistema web multiempresa
 
-- **Orientação a objetos**: modelagem das entidades `Veiculo`, `Cliente` e `Aluguel`, com métodos `to_dict()`/`from_dict()` para conversão entre objetos e dados persistidos.
-- **Persistência de dados**: leitura e escrita em arquivos JSON, incluindo tratamento de erros de leitura (`JSONDecodeError`).
-- **Validação de entradas**: garantir que placas e CPFs não se dupliquem, e tratar entradas inválidas do usuário sem quebrar o programa.
-- **Organização de código**: separar responsabilidades em funções pequenas e específicas, facilitando manutenção e leitura.
-- **Lógica de negócio real**: calcular valores de aluguel, controlar status de disponibilidade e gerar relatórios financeiros simples.
+## Autor
 
-Ainda é um projeto de estudo, mas representa um marco importante no início da minha jornada como desenvolvedor.
-
-## 👨‍💻 Autor
-
-**Leonardo Severino** — projeto desenvolvido durante o 1º período da faculdade.
+Leonardo Severino
