@@ -1,47 +1,67 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&family=Inter:wght@400;500;600&display=swap');
+/* =========================================================
+   ALUGUEL DE VEÍCULOS — folha de estilos
+   Tema escuro em tons de azul e índigo.
+
+   Organização:
+   1. Variáveis      2. Reset e base     3. Tipografia
+   4. Cabeçalho e navegação              5. Conteúdo (main, hero, cards)
+   6. Menu do gerenciador                7. Formulários e botões
+   8. Tabelas e resultados               9. Rodapé
+   10. Acessibilidade e responsividade
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 
-/* ==================
-   VARIÁVEIS GLOBAIS
-   ================== */
+/* =========================================================
+   1. VARIÁVEIS
+   Todas as cores do site ficam aqui: para mudar o visual,
+   altere só este bloco.
+   ========================================================= */
 
 :root {
 
-  --primary-color:       #e6c565;
-  --primary-dark:        #8a6d1f; 
-  --secondary-color:     #2a2410; 
-                                       
-  --accent-color:        #f5da8a;
-  --accent-dark:         #c9a94e;
+  /* Marca */
+  --primary-color:        #1a2e8a;   /* botões, cabeçalhos de tabela */
+  --primary-hover:        #2640b5;   /* botões ao passar o mouse */
+  --accent-color:         #8a8cf5;   /* títulos, links e destaques sobre fundo escuro */
+  --accent-soft:          rgba(138, 140, 245, 0.14);
 
-  /* Cores de status — mantidas legíveis sobre fundo escuro */
-  --status-disponivel:   #4ade80; /* verde neon: tudo certo */
-  --status-alugado:      #e0c36a; /* dourado: em uso */
-  --status-danificado:   #ff4d4d; /* vermelho neon: requer atenção */
-
-  /* Fundos e superfícies */
-  --bg-color:             #050505;
-  --surface-color:        #151515; /* "cards", inputs, tabelas */
-  --surface-color-alt:    #1f1f1f; /* variação para hover/listras */
-  --border-color:         #3a3020; /* borda sutil sobre fundo escuro */
+  /* Fundos e superfícies (do mais escuro ao mais claro) */
+  --bg-color:             #0b1020;   /* fundo da página */
+  --surface-color:        #121933;   /* cards, tabelas, menu */
+  --surface-color-alt:    #1b2448;   /* hover e linhas alternadas */
+  --field-bg:             #0d1226;   /* campos de formulário */
+  --border-color:         #34406b;   /* bordas decorativas (cards, tabelas) */
+  --field-border:         #5a68a0;   /* borda dos campos: contraste mínimo 3:1 */
 
   /* Texto */
-  --text-color:           #f5f5f5; /* texto principal, claro sobre fundo escuro */
-  --text-muted:           #a8a8a8;
+  --text-color:           #eef0fa;   /* texto principal */
+  --text-muted:           #a9b1d1;   /* texto secundário */
+  --text-on-primary:      #ffffff;   /* texto sobre botões azuis */
 
-  /* Parágrafo de destaque (rodapé) — mantido como "aviso" claro, */
-  --destaque-text:        #2a2410;
-  --destaque-border:      var(--primary-color);
-  --destaque-background:  var(--accent-color);
+  /* Status dos veículos */
+  --status-disponivel:    #4ade80;   /* verde */
+  --status-alugado:       #fbbf24;   /* âmbar */
+  --status-danificado:    #f87171;   /* vermelho */
+  --danger-color:         #b42318;   /* botões de exclusão */
+  --danger-hover:         #d92d20;
 
   /* Tipografia */
-  --font-heading: 'Segoe UI', Arial, sans-serif, Helvetica;
-  --font-body:    'Inter', Arial, Helvetica, sans-serif;
+  --font-heading: 'Inter', 'Segoe UI', Arial, Helvetica, sans-serif;
+  --font-body:    'Inter', 'Segoe UI', Arial, Helvetica, sans-serif;
+
+  /* Detalhes */
+  --radius-sm:  6px;
+  --radius-md:  10px;
+  --radius-lg:  16px;
+  --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.35);
+  --transition: 0.2s ease;
 }
 
 
 /* =========================================================
-   RESET GLOBAL
+   2. RESET E BASE
    ========================================================= */
 
 * {
@@ -50,8 +70,6 @@
   padding: 0;
 }
 
-
-
 /* Necessário para o JavaScript: classes como .campo definem "display: flex",
    o que sobrescreve o atributo hidden do navegador. Esta regra garante que
    qualquer elemento com hidden realmente desapareça. */
@@ -59,514 +77,513 @@
   display: none !important;
 }
 
-
-/* =========================================================
-   BODY
-   ========================================================= */
+html {
+  background-color: var(--bg-color);
+}
 
 body {
-  
   max-width: 1200px;
-  margin: auto;
-  padding: 10px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 16px;
 
-  background: radial-gradient(circle at top, #2a2410, var(--bg-color) 65%);
-  
+  background:
+    radial-gradient(900px 500px at 50% -10%, rgba(38, 64, 181, 0.35), transparent 70%),
+    var(--bg-color);
+  background-repeat: no-repeat;
+
   color: var(--text-color);
-  font-family: var(--font-body); 
-  line-height: 1.7;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.65;
 }
 
-/* =========================================================
-   ÁREA PRINCIPAL
-   ========================================================= */
-
-main {
-  max-width: 1200px;
-  margin: 50px auto;
-  padding: 50px;
-
-  background: linear-gradient(145deg, #151515, #202020);
-
-  border: 1px solid var(--primary-color);
-  border-radius: 18px;
-
-  box-shadow:
-    0 0 25px rgba(224, 195, 106, 0.15),
-    0 0 60px rgba(224, 195, 106, 0.25); 
-  position: relative;
+a {
+  color: var(--accent-color);
+  text-underline-offset: 3px;
+  transition: color var(--transition);
 }
 
-/* Linha de "scanline" sutil no topo do main — detalhe clássico de
-   interfaces cyberpunk, sem exagerar */
-main::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 5%;
-  right: 5%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
-  opacity: 0.6;
+a:hover {
+  color: var(--text-color);
+}
+
+img {
+  max-width: 100%;
 }
 
 
 /* =========================================================
-   TÍTULO PRINCIPAL
+   3. TIPOGRAFIA
    ========================================================= */
 
 h1 {
   font-family: var(--font-heading);
+  font-size: 28px;
   font-weight: 700;
-  font-size: 30px;
   line-height: 1.2;
-  letter-spacing: 2px; /* Orbitron em caixa alta ganha presença com espaçamento maior */
-  text-transform: uppercase;
-
-  color: var(--bg-color);
-  background-color: var(--primary-color);
-
+  letter-spacing: 0.3px;
   text-align: center;
 
-  border: 2px solid var(--primary-color);
-  border-radius: 10px;
+  color: var(--text-on-primary);
+  background: linear-gradient(135deg, var(--primary-color), #2a40b8);
 
-  padding: 15px 20px;
-  margin: 0 auto 20px;
-
-  box-shadow:
-    0 0 15px rgba(224, 195, 106, 0.6),
-    0 0 35px rgba(224, 195, 106, 0.3); /* glow neon em vez da sombra escura genérica de antes */
+  border-radius: var(--radius-md);
+  padding: 18px 24px;
 }
 
-/* =========================================================
-   SUBTÍTULOS
-   ========================================================= */
+/* Quando há menu logo abaixo, o título e o menu formam um bloco só */
+h1:has(+ .banner) {
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
 
 h2 {
   font-family: var(--font-heading);
-  color: var(--primary-color);
   font-size: 20px;
   font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-
   line-height: 1.3;
+  color: var(--accent-color);
 
-  margin-top: 10px;
-  margin-bottom: 15px;
-
-  text-shadow: 0 0 8px rgba(224, 195, 106, 0.4); /* leve brilho, sem exagerar a ponto
-                                                      de prejudicar a leitura */
+  margin: 10px 0 14px;
 }
 
-
-
-/* =========================================================
-   PARÁGRAFOS
-   ========================================================= */
+h3 {
+  font-family: var(--font-heading);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 8px;
+}
 
 p {
-  font-size: 17px;
-  line-height: 1.6;
-  margin-bottom: 15px;
-  color: var(--text-color); /* corrigido: estava "#fff" fixo, agora usa a variável */
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--text-color);
+  margin-bottom: 14px;
 }
 
 
 /* =========================================================
-   PARÁGRAFO DESTAQUE
+   4. CABEÇALHO E NAVEGAÇÃO (início, gerenciador, contato)
    ========================================================= */
 
-.destaque {
-  color: var(--destaque-text);
-  background-color: var(--destaque-background);
+.banner {
+  background-color: rgba(18, 25, 51, 0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* compatibilidade com Safari */
 
-  font-style: italic;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.5;
+  border: 1px solid var(--border-color);
+  border-top: none;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
 
-  border: 1px solid var(--destaque-border);
-  border-radius: 5px;
-
-  padding: 8px 12px;
-  margin-top: 20px;
-
-  text-align: center;
+  padding: 10px 16px;
 }
 
-.destaque a {
-  color: var(--destaque-text);
-  font-weight: 600;
-}
+.nav-site {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
 
-/*--- inicio, gerenciador, contato---*/
-
-.nav-site a {
-  position: relative;
-  transition: transform 0.25s ease, color 0.25s ease;
-  /* remove a borda cravada que já existe, deixa só o texto */
-}
-
-.nav-site a::after {
-  content: "";
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: var(--primary-color);
-  transition: width 0.2s ease;
-}
-
-.nav-site a:hover::after,
-.nav-site a[aria-current="page"]::after {
-  width: 100%;
-}
-
-
-
-.nav-site a { 
-  transition: transform 0.25s ease, color 0.25s ease;
-  color: #f5f2f2;
-}
-
-.nav-site a:hover {
-  transform: translateY(-2px);
-  color:  #020202c9; /* muda a cor do link ao passar o mouse */
+  list-style: none;
 }
 
 .nav-site li {
   list-style: none;
 }
-.banner {
-  background-color: rgba(190, 172, 65, 0.274);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px); /* compatibilidade com Safari */
-  border-bottom: 1px solid var(--bg-color)
+
+.nav-site a {
+  display: block;
+  padding: 8px 16px;
+
+  color: var(--text-muted);
+  font-weight: 500;
+  text-decoration: none;
+
+  border-radius: var(--radius-sm);
+  transition: background-color var(--transition), color var(--transition);
+}
+
+.nav-site a:hover {
+  color: var(--text-color);
+  background-color: var(--surface-color-alt);
+}
+
+/* Página atual */
+.nav-site a[aria-current="page"] {
+  color: var(--text-on-primary);
+  background-color: var(--primary-color);
+}
+
+
+/* =========================================================
+   5. CONTEÚDO PRINCIPAL
+   ========================================================= */
+
+main {
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 40px;
+
+  background: linear-gradient(160deg, #141b38, #0f1529);
+
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+}
+
+/* --- Apresentação da página inicial --- */
+
+.hero {
+  max-width: 760px;
+  margin: 0 auto 40px;
+  text-align: center;
+}
+
+.hero p {
+  font-size: 18px;
+  color: var(--text-muted);
+  margin-bottom: 24px;
 }
 
 .botao-cta {
   display: inline-block;
-  padding: 12px 24px;
+  padding: 12px 28px;
+
   background-color: var(--primary-color);
-  color: var(--bg-color);
+  color: var(--text-on-primary);
+
   font-family: var(--font-heading);
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 600;
   text-decoration: none;
-  border-radius: 6px;
-  transition: background-color 0.3s, transform 0.2s;
-}
-/*--- inicio, gerenciador, contato---*/
 
-/* =========================================================
-   MENU
-   ========================================================= */
+  border: 1px solid var(--accent-color);
+  border-radius: var(--radius-sm);
 
-nav a {
-  transition: 0.3s;
+  transition: background-color var(--transition), transform var(--transition);
 }
 
-nav a:hover {
-  box-shadow: 0 0 12px rgba(224, 195, 106, 0.5); 
-  
-  color: var(--bg-color);
-  background-color: var(--primary-color);
-  padding: 8px;
-  border-radius: 4px;
+.botao-cta:hover {
+  background-color: var(--primary-hover);
+  color: var(--text-on-primary);
+  transform: translateY(-2px);
 }
 
+/* --- Cards da página inicial --- */
 
-/* Categorias do menu */
+.info-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  margin-top: 8px;
+}
 
-.menu-category {
-  margin-bottom: 15px;
+.info-card {
+  display: flex;
+  flex-direction: column;
+
+  padding: 20px;
+
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+
+  transition: border-color var(--transition), transform var(--transition);
+}
+
+.info-card:hover {
+  border-color: var(--accent-color);
+  transform: translateY(-3px);
+}
+
+.info-card .icone {
+  font-size: 28px;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.info-card p {
+  color: var(--text-muted);
+  margin-bottom: 0;
+}
+
+/* A altura acompanha a largura (proporção das imagens: 1408 x 768),
+   então nada é cortado. */
+.info-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 11 / 6;
+  object-fit: cover;
+
+  margin: 4px 0 14px;
 
   border: 1px solid var(--border-color);
-  border-radius: 13px;
-
-  padding: 15px;
-
-  background-color: var(--surface-color); /* corrigido: era #f9f9f9 (quase branco),
-                                               destoando do tema escuro */
-  box-shadow: 0 0 10px rgba(224, 195, 106, 0.08);
+  border-radius: var(--radius-sm);
 }
 
 
-/* Título das categorias */
+/* =========================================================
+   6. MENU DO GERENCIADOR (categorias)
+   ========================================================= */
+
+.menu-category {
+  margin-bottom: 16px;
+  padding: 18px;
+
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+}
 
 .menu-category h2 {
-  color: var(--primary-color);
   font-size: 18px;
-
-  margin-bottom: 5px;
-
-  border-bottom: 1px solid var(--border-color);
-
+  margin: 0 0 8px;
   padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-color);
 }
-
-
-/* Lista */
 
 .menu-category ul {
   list-style: none;
-  padding: 0;
 }
-
-
-/* Itens da lista */
 
 .menu-category li {
-  margin-bottom: 5px;
+  margin-bottom: 4px;
 }
-
-
-/* Links */
 
 .menu-category a {
-  color: var(--text-color); 
+  display: block;
+  padding: 8px 12px;
 
+  color: var(--text-color);
   text-decoration: none;
 
-  padding: 6px 10px;
-
-  display: block;
-
-  transition: background-color 0.3s, color 0.3s;
+  border-radius: var(--radius-sm);
+  transition: background-color var(--transition), color var(--transition);
 }
-
-
-/* Efeito ao passar o mouse */
 
 .menu-category a:hover,
 .menu-category a:focus-visible {
   background-color: var(--primary-color);
-  color: var(--bg-color);
-  border-radius: 6px;
+  color: var(--text-on-primary);
 }
 
+
 /* =========================================================
-   FORMULÁRIOS
+   7. FORMULÁRIOS E BOTÕES
    ========================================================= */
 
 form {
   display: flex;
   flex-direction: column;
-  gap: 13px;
+  gap: 14px;
 
   width: 100%;
-  max-width: 400px;
-
+  max-width: 420px;
   margin: 20px auto;
 }
 
-
-/* Campo individual */
-
-.campo {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-
-/* Label */
-
-.campo label {
-  font-family: var(--font-body);
+label {
   font-weight: 600;
   color: var(--text-color);
 }
 
+/* Rótulo solto no formulário (fora de .campo) fica junto do seu campo */
+form > label {
+  margin-bottom: -8px;
+}
 
-/* Campos de entrada */
+/* Campo individual (rótulo + entrada) */
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
 
-.campo input {
+.campo label {
+  font-size: 15px;
+}
+
+input:not([type="radio"]):not([type="checkbox"]),
+select,
+textarea {
   width: 100%;
-  padding: 8px 10px;
+  padding: 10px 12px;
 
-  background-color: var(--surface-color); 
+  background-color: var(--field-bg);
   color: var(--text-color);
 
-  border: 1px solid var(--border-color);
-  border-radius: 5px;
+  border: 1px solid var(--field-border);
+  border-radius: var(--radius-sm);
 
   font-family: var(--font-body);
   font-size: 16px;
 
-  transition: 0.3s;
+  transition: border-color var(--transition), box-shadow var(--transition);
 }
 
-
-/* Campo ao passar o mouse */
-
-.campo input:hover {
-  border-color: var(--primary-color);
+textarea {
+  min-height: 130px;
+  resize: vertical;
 }
 
+::placeholder {
+  color: var(--text-muted);
+  opacity: 0.8;
+}
 
-/* Campo selecionado */
+input:not([type="radio"]):not([type="checkbox"]):hover,
+select:hover,
+textarea:hover {
+  border-color: var(--accent-color);
+}
 
-.campo input:focus {
+input:not([type="radio"]):not([type="checkbox"]):focus,
+select:focus,
+textarea:focus {
   outline: none;
-
-  border-color: var(--primary-color);
-
-  box-shadow: 0 0 8px rgba(214, 182, 87, 0.75); 
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(138, 140, 245, 0.35);
 }
 
-
-/* =========================================================
-   SELECT (menus suspensos)
-   ========================================================= */
-
-select {
-  width: 100%;
-  padding: 8px 10px;
-
-  background-color: var(--surface-color); 
-  color: var(--text-color);
-
-  border: 1px solid var(--border-color);
-  border-radius: 5px;
-
-  font-family: var(--font-body);
-  font-size: 16px;
-
-  transition: 0.3s;
-}
-
-select:hover {
-  border-color: var(--primary-color);
-}
-
-select:focus {
-  outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 8px rgba(255, 213, 86, 0.5); 
-}
-
-
-/* =========================================================
-   BOTÃO
-   ========================================================= */
-
+/* Botão do formulário */
 form button {
-  padding: 10px 18px;
+  padding: 11px 20px;
 
   background-color: var(--primary-color);
-  color: var(--bg-color);
+  color: var(--text-on-primary);
 
-  border: 1px solid var(--primary-color);
-  border-radius: 5px;
+  border: 1px solid var(--accent-color);
+  border-radius: var(--radius-sm);
 
   font-family: var(--font-heading);
   font-size: 15px;
   font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
 
   cursor: pointer;
-
-  transition: 0.3s;
+  transition: background-color var(--transition), transform var(--transition);
 }
-
-
-/* Efeito do botão */
 
 form button:hover {
-  background-color: transparent;
-  color: var(--primary-color);
-
-  box-shadow: 0 0 15px rgba(224, 195, 106, 0.6);
-
-  transform: translateY(-2px);
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
 }
-
-
-/* Botão pressionado */
 
 form button:active {
   transform: translateY(0);
-  box-shadow: 0 0 6px var(--accent-dark);
 }
 
+/* Formulários que pedem confirmação (excluir) ganham botão vermelho */
+form[data-confirmar] button {
+  background-color: var(--danger-color);
+  border-color: var(--status-danificado);
+}
+
+form[data-confirmar] button:hover {
+  background-color: var(--danger-hover);
+}
+
+/* Grupo de opções (ex.: alterar status) */
+fieldset {
+  padding: 14px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+}
+
+legend {
+  padding: 0 8px;
+  font-weight: 600;
+  color: var(--accent-color);
+}
+
+.opcao-radio {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 5px 0;
+
+  color: var(--text-color);
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.opcao-radio input[type="radio"] {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--accent-color);
+}
+
+
 /* =========================================================
-   TABELAS (ex: listagem e filtro da frota)
+   8. TABELAS E RESULTADO DE BUSCA
    ========================================================= */
 
 table {
   width: 100%;
-  border-collapse: collapse;
   margin: 20px 0;
 
-  background-color: var(--surface-color); /* corrigido: era #fff */
+  border-collapse: collapse;
+  background-color: var(--surface-color);
   border: 1px solid var(--border-color);
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   overflow: hidden;
-
-  box-shadow: 0 0 15px rgba(224, 195, 106, 0.1);
 }
 
-th, td {
-  padding: 10px 12px;
+th,
+td {
+  padding: 12px 14px;
   text-align: left;
-  border-bottom: 1px solid var(--border-color);
   color: var(--text-color);
+  border-bottom: 1px solid var(--border-color);
 }
 
 th {
   background-color: var(--primary-color);
-  color: var(--bg-color);
-  font-family: var(--font-heading);
+  color: var(--text-on-primary);
+  font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
   text-transform: uppercase;
-  font-size: 14px;
+}
+
+tbody tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.025);
 }
 
 tbody tr:hover {
   background-color: var(--surface-color-alt);
 }
 
-tr.status-disponivel {
-  border-left: 4px solid var(--status-disponivel);
+tbody tr:last-child td {
+  border-bottom: none;
 }
 
-tr.status-alugado {
-  border-left: 4px solid var(--status-alugado);
-}
-
+/* Status do veículo: faixa colorida na lateral da linha */
+tr.status-disponivel { border-left: 4px solid var(--status-disponivel); }
+tr.status-alugado    { border-left: 4px solid var(--status-alugado); }
 tr.status-danificado {
   border-left: 4px solid var(--status-danificado);
-  background-color: rgba(255, 77, 77, 0.08);
+  background-color: rgba(248, 113, 113, 0.08);
 }
 
-/* =========================================================
-   RESULTADO DE BUSCA (ex: buscar por placa)
-   ========================================================= */
-
+/* Resultado de busca (ex.: buscar por placa) */
 .resultado-busca {
-  max-width: 400px;
+  max-width: 420px;
   margin: 20px 0;
+  padding: 16px 20px;
 
-  padding: 15px 20px;
-
-  background-color: var(--surface-color); /* corrigido: era #fff */
+  background-color: var(--surface-color);
   color: var(--text-color);
 
   border: 1px solid var(--border-color);
-  border-radius: 8px;
   border-left: 5px solid var(--status-disponivel);
-
-  box-shadow: 0 0 15px rgba(224, 195, 106, 0.1);
+  border-radius: var(--radius-md);
 }
 
 .resultado-busca h2 {
-  margin-bottom: 10px;
+  margin-top: 0;
 }
 
 .resultado-busca p {
@@ -574,78 +591,101 @@ tr.status-danificado {
   margin-bottom: 6px;
 }
 
-.resultado-busca.status-disponivel {
-  border-left-color: var(--status-disponivel);
-}
-
-.resultado-busca.status-alugado {
-  border-left-color: var(--status-alugado);
-}
-
+.resultado-busca.status-disponivel { border-left-color: var(--status-disponivel); }
+.resultado-busca.status-alugado    { border-left-color: var(--status-alugado); }
 .resultado-busca.status-danificado {
   border-left-color: var(--status-danificado);
-  background-color: rgba(255, 77, 77, 0.08);
+  background-color: rgba(248, 113, 113, 0.08);
 }
+
 
 /* =========================================================
-   FIELDSET (grupo de opções, ex: alterar status)
+   9. RODAPÉ E AVISOS
    ========================================================= */
 
-fieldset {
-  border: 1px solid var(--border-color);
-  border-radius: 5px;
-  padding: 12px 15px;
+footer {
+  max-width: 1200px;
+  margin: 0 auto 24px;
 }
 
-legend {
-  font-family: var(--font-heading);
-  font-weight: 600;
-  color: var(--primary-color);
-  padding: 0 6px;
-  letter-spacing: 0.5px;
-}
+.destaque {
+  margin-top: 20px;
+  padding: 10px 14px;
 
-.opcao-radio {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
+  background-color: var(--accent-soft);
   color: var(--text-color);
-  font-weight: 400;
-  cursor: pointer;
 
-  padding: 4px 0;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+
+  border: 1px solid rgba(138, 140, 245, 0.4);
+  border-radius: var(--radius-sm);
 }
 
-.opcao-radio input[type="radio"] {
-  accent-color: var(--primary-color);
-  width: 16px;
-  height: 16px;
+.destaque a {
+  color: var(--accent-color);
+  font-weight: 600;
 }
+
+.destaque a:hover {
+  color: var(--text-color);
+}
+
 
 /* =========================================================
-   RESPONSIVIDADE
+   10. ACESSIBILIDADE E RESPONSIVIDADE
    ========================================================= */
+
+/* Contorno visível para quem navega pelo teclado */
+:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 3px;
+}
+
+/* Respeita quem desativa animações no sistema */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
 
 /* Tablets e telas menores */
-
 @media (max-width: 1024px) {
   main {
     padding: 30px;
   }
 }
 
-
 /* Celulares */
-
 @media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+
   main {
-    padding: 20px 15px;
-    margin: 25px auto;
+    padding: 22px 16px;
+    margin: 16px auto;
   }
 
   h1 {
     font-size: 22px;
-    letter-spacing: 1px;
+    padding: 14px 16px;
+  }
+
+  .hero p {
+    font-size: 16px;
+  }
+
+  .nav-site a {
+    padding: 8px 12px;
+  }
+
+  /* Tabelas largas rolam para o lado em vez de estourar a tela */
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
   }
 }
