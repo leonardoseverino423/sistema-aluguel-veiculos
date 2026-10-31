@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buscar Cliente por CPF</title>
+<link rel="stylesheet" href="aluguel.css">
+</head>
+<body>
+<header>
+<h1>Buscar por CPF</h1>
+</header>
+
+<main>
+<p>Digite o CPF do cliente que deseja consultar.</p>
+
+<!--
+  Aqui o método é POST (e não GET, como na busca por placa) porque o CPF é
+  um dado pessoal: com GET ele apareceria na URL, ficaria no histórico do
+  navegador e nos logs do servidor.
+
+  No backend (Flask), seria capturado com request.form["cpf"], e o Python
+  normaliza o valor (normalizar_cpf), então tanto "123.456.789-00" quanto
+  "12345678900" funcionam.
+-->
+
+<form action="/buscar-cpf" method="post">
+<div class="campo">
+<label for="cpf">CPF:</label>
+<input type="text" id="cpf" name="cpf"
+       placeholder="123.456.789-00"
+       inputmode="numeric" maxlength="14" autocomplete="off"
+       pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}"
+       title="Digite os 11 dígitos do CPF, com ou sem pontos e traço."
+       required>
+</div>
+
+<button type="submit">Buscar</button>
+</form>
+
+<!--
+  O resultado abaixo é um EXEMPLO. Com Jinja2, ficaria algo como:
+
+      {% if cliente %}
+        <div class="resultado-busca"> ... dados ... </div>
+      {% elif buscou %}
+        <p>Nenhum cliente encontrado com o CPF informado.</p>
+      {% endif %}
+
+  O "buscou" evita mostrar a mensagem de erro antes de o usuário buscar.
+-->
+<div class="resultado-busca">
+<h2>João da Silva</h2>
+<p><strong>CNH:</strong> 12345678900</p>
+<p><strong>CPF:</strong> 123.456.789-00</p>
+<p><strong>Telefone:</strong> (32) 99999-0000</p>
+<p><strong>Aluguel ativo:</strong> Honda Civic (DEF4G56)</p>
+</div>
+
+</main>
+
+<footer>
+<p class="destaque"><a href="index.html">Voltar ao menu principal</a></p>
+</footer>
+<script src="validacao.js"></script>
+</body>
+</html>
