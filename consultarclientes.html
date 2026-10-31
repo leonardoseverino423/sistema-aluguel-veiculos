@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Consultar Clientes</title>
+<link rel="stylesheet" href="aluguel.css">
+</head>
+<body>
+<header>
+<h1>Clientes Cadastrados</h1>
+</header>
+
+<main>
+<p>Clientes atualmente cadastrados no sistema.</p>
+
+<!--
+  Esta tabela ainda tem dados de EXEMPLO, escritos direto no HTML.
+  Quando o Python estiver integrado (ex: via Flask + Jinja2), cada <tr>
+  vai ser gerada automaticamente a partir de repo_frota, com algo como:
+
+      {% for v in veiculos %}
+      <tr class="{{ 'status-danificado' if v.danificado else ('status-alugado' if v.alugado else 'status-disponivel') }}">
+        <td>{{ v.marca }} {{ v.modelo }}</td>
+        <td>{{ v.ano }}</td>
+        <td>{{ v.placa }}</td>
+        <td>{{ v.quilometragem }} km</td>
+        <td>R$ {{ "%.2f"|format(v.preco_dia) }}</td>
+        <td>{{ 'Danificado' if v.danificado else ('Alugado - ' ~ v.cliente_nome if v.alugado else 'Disponível') }}</td>
+      </tr>
+      {% endfor %}
+-->
+<table>
+  <thead>
+    <tr>
+      <th>Veículo</th>
+      <th>Ano</th>
+      <th>Placa</th>
+      <th>Quilometragem</th>
+      <th>Preço/dia</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="status-disponivel">
+      <td>Toyota Corolla</td>
+      <td>2022</td>
+      <td>ABC1D23</td>
+      <td>15.000 km</td>
+      <td>R$ 150,00</td>
+      <td>Disponível</td>
+    </tr>
+    <tr class="status-alugado">
+      <td>Honda Civic</td>
+      <td>2021</td>
+      <td>DEF4G56</td>
+      <td>32.500 km</td>
+      <td>R$ 140,00</td>
+      <td>Alugado — João Silva</td>
+    </tr>
+    <tr class="status-danificado">
+      <td>Fiat Argo</td>
+      <td>2020</td>
+      <td>HIJ7K89</td>
+      <td>48.200 km</td>
+      <td>R$ 110,00</td>
+      <td>Danificado</td>
+    </tr>
+  </tbody>
+</table>
+
+</main>
+
+<footer>
+<p class="destaque"><a href="index.html">Voltar ao menu principal</a></p>
+</footer>
+</body>
+</html>
