@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Financeiro</title>
+<link rel="stylesheet" href="aluguel.css">
+</head>
+<body>
+<header>
+<h1>Financeiro</h1>
+</header>
+
+<main>
+<p>Resumo do que cada parte deve pagar, conforme as regras da locadora.</p>
+
+<!--
+  Dados de EXEMPLO. Espelha relatorio_alugueis() do Python.
+
+  Quem paga o quê:
+    CLIENTE   -> diárias, avarias e multas de trânsito ocorridas durante o aluguel
+    LOCADORA  -> manutenção mecânica (desgaste natural) e multas de datas sem aluguel
+
+  As multas são REPASSADAS ao cliente: não contam como receita da locadora.
+  Ainda não existe controle de pagamento, por isso o total é "faturado", não "arrecadado".
+-->
+
+<section>
+<h2>A receber dos clientes</h2>
+<div class="resumo-cards">
+  <div class="resumo-card">
+    <span class="rotulo">Total de Diárias</span>
+    <span class="valor">R$ 2.100,00</span>
+  </div>
+  <div class="resumo-card">
+    <span class="rotulo">Avarias</span>
+    <span class="valor">R$ 450,00</span>
+  </div>
+  <div class="resumo-card">
+    <span class="rotulo">Multas repassadas</span>
+    <span class="valor">R$ 295,23</span>
+  </div>
+  <div class="resumo-card resumo-total">
+    <span class="rotulo">Total faturado</span>
+    <span class="valor">R$ 2.845,23</span>
+  </div>
+</div>
+</section>
+
+<section>
+<h2>Despesas da locadora</h2>
+<div class="resumo-cards">
+  <div class="resumo-card">
+    <span class="rotulo">Manutenção mecânica</span>
+    <span class="valor">R$ 200,00</span>
+  </div>
+  <div class="resumo-card">
+    <span class="rotulo">Multas fora de aluguel</span>
+    <span class="valor">R$ 130,16</span>
+  </div>
+  <div class="resumo-card resumo-total">
+    <span class="rotulo">Total de despesas</span>
+    <span class="valor">R$ 330,16</span>
+  </div>
+</div>
+</section>
+
+<section>
+<h2>Lançamentos</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Data</th>
+      <th>Tipo</th>
+      <th>Placa</th>
+      <th>Descrição</th>
+      <th class="valor">Valor</th>
+      <th>Responsável</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>20/09/2026</td>
+      <td>Multa de trânsito</td>
+      <td>ABC1D23</td>
+      <td>AIT 999 (sem aluguel na data)</td>
+      <td class="valor">R$ 130,16</td>
+      <td><span class="selo selo-locadora">Locadora</span></td>
+    </tr>
+    <tr>
+      <td>05/10/2026</td>
+      <td>Multa de trânsito</td>
+      <td>ABC1D23</td>
+      <td>AIT 123</td>
+      <td class="valor">R$ 195,23</td>
+      <td><span class="selo selo-cliente">Cliente</span></td>
+    </tr>
+    <tr>
+      <td>08/10/2026</td>
+      <td>Manutenção mecânica</td>
+      <td>ABC1D23</td>
+      <td>Óleo (nível/troca)</td>
+      <td class="valor">R$ 120,00</td>
+      <td><span class="selo selo-locadora">Locadora</span></td>
+    </tr>
+    <tr>
+      <td>08/10/2026</td>
+      <td>Avaria/dano</td>
+      <td>ABC1D23</td>
+      <td>Amassado na porta</td>
+      <td class="valor">R$ 450,00</td>
+      <td><span class="selo selo-cliente">Cliente</span></td>
+    </tr>
+    <tr>
+      <td>10/10/2026</td>
+      <td>Multa de trânsito</td>
+      <td>ABC1D23</td>
+      <td>AIT 555 (chegou após a devolução)</td>
+      <td class="valor">R$ 100,00</td>
+      <td><span class="selo selo-cliente">Cliente</span></td>
+    </tr>
+    <tr>
+      <td>12/10/2026</td>
+      <td>Manutenção mecânica</td>
+      <td>ABC1D23</td>
+      <td>Peças mecânicas</td>
+      <td class="valor">R$ 80,00</td>
+      <td><span class="selo selo-locadora">Locadora</span></td>
+    </tr>
+  </tbody>
+</table>
+</section>
+
+</main>
+
+<footer>
+<p class="destaque"><a href="index.html">Voltar ao menu principal</a></p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inspeções Semanais</title>
+<link rel="stylesheet" href="aluguel.css">
+</head>
+<body>
+<header>
+<h1>Inspeções Semanais</h1>
+</header>
+
+<main>
+<p>Acompanhamento das inspeções obrigatórias dos veículos alugados.
+Os mais atrasados aparecem primeiro.</p>
+
+<!--
+  Dados de EXEMPLO. Espelha inspecoes_pendentes() do Python:
+  a cor da linha segue a situação (mesmas classes de status da frota):
+      atrasada   -> status-danificado  (vermelho)
+      vence hoje -> status-alugado     (âmbar)
+      no prazo   -> status-disponivel  (verde)
+
+  Com Jinja2:
+      {% for v in veiculos_alugados|sort(attribute='proxima_inspecao') %}
+      <tr class="{{ 'status-danificado' if v.atrasada else ('status-alugado' if v.dias == 0 else 'status-disponivel') }}">
+        ...
+      </tr>
+      {% endfor %}
+-->
+<table>
+  <thead>
+    <tr>
+      <th>Veículo</th>
+      <th>Placa</th>
+      <th>Cliente</th>
+      <th>Última inspeção</th>
+      <th>Situação</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="status-danificado">
+      <td>Honda Civic</td>
+      <td>DEF4G56</td>
+      <td>João Silva</td>
+      <td>01/10/2026</td>
+      <td><span class="selo selo-atrasado">Atrasada há 3 dias</span></td>
+    </tr>
+    <tr class="status-alugado">
+      <td>Toyota Corolla</td>
+      <td>ABC1D23</td>
+      <td>Maria Souza</td>
+      <td>04/10/2026</td>
+      <td><span class="selo selo-hoje">Vence hoje</span></td>
+    </tr>
+    <tr class="status-disponivel">
+      <td>Fiat Argo</td>
+      <td>HIJ7K89</td>
+      <td>Ana Lima</td>
+      <td>08/10/2026</td>
+      <td><span class="selo selo-ok">Vence em 4 dias</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a class="botao-cta" href="registrarinspecao.html">Registrar inspeção</a></p>
+
+</main>
+
+<footer>
+<p class="destaque"><a href="index.html">Voltar ao menu principal</a></p>
+</footer>
+</body>
+</html>

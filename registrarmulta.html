@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registrar Multa de Trânsito</title>
+<link rel="stylesheet" href="aluguel.css">
+</head>
+<body>
+<header>
+<h1>Registrar Multa de Trânsito</h1>
+</header>
+
+<main>
+<p>Informe os dados do auto de infração. O sistema descobre sozinho quem
+estava com o veículo no dia da infração.</p>
+
+<div class="aviso">
+<p><strong>Regra:</strong> a multa é do <strong>cliente que estava com o veículo na data da infração</strong>,
+mesmo que o aluguel já tenha terminado. Se nenhum aluguel cobre aquela data,
+a multa é custo da <strong>locadora</strong>.</p>
+</div>
+
+<!--
+  Espelha registrar_multa() do Python. Por que a DATA DA INFRAÇÃO e não a data
+  de hoje: a multa costuma chegar semanas depois da devolução, e quem paga é
+  quem estava dirigindo no dia (o Python procura o aluguel que cobre essa data).
+
+  O campo de data usa data-max-hoje (datas.js): infração no futuro não existe.
+  Se dois aluguéis cobrem a data (troca de cliente no mesmo dia), o Python
+  pergunta qual cliente estava com o veículo.
+-->
+
+<form action="/multa" method="post">
+
+<div class="campo">
+<label for="placa">Placa do veículo:</label>
+<input type="text" id="placa" name="placa" placeholder="ABC1D23" maxlength="7"
+       pattern="[A-Za-z]{3}[0-9][A-Za-z0-9][0-9]{2}"
+       title="Placa com 7 caracteres, como ABC1234 ou ABC1D23." autocomplete="off" required>
+</div>
+
+<div class="campo">
+<label for="data-infracao">Data da infração:</label>
+<input type="date" id="data-infracao" name="data_infracao" data-max-hoje required>
+</div>
+
+<div class="campo">
+<label for="descricao">Descrição ou nº do auto de infração:</label>
+<input type="text" id="descricao" name="descricao" required>
+</div>
+
+<div class="campo">
+<label for="valor">Valor da multa (R$):</label>
+<input type="number" id="valor" name="valor" min="0" step="0.01" inputmode="decimal" required>
+</div>
+
+<button type="submit">Registrar multa</button>
+</form>
+
+<!--
+  Resultado de EXEMPLO (aparece depois de enviar, com Jinja2):
+      {% if multa %}
+        <div class="resultado-busca"> ...atribuída a {{ multa.cliente }}... </div>
+      {% endif %}
+-->
+<div class="resultado-busca">
+<h2>Exemplo de resultado</h2>
+<p><strong>Multa de R$ 195,23</strong> atribuída a <strong>João Silva</strong>
+(aluguel de 01/10/2026 a 12/10/2026).</p>
+</div>
+
+</main>
+
+<footer>
+<p class="destaque"><a href="index.html">Voltar ao menu principal</a></p>
+</footer>
+
+<!-- Scripts no fim do body: o HTML já existe quando eles rodam -->
+<script src="datas.js"></script>
+<script src="validacao.js"></script>
+</body>
+</html>
