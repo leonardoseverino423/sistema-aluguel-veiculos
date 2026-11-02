@@ -16,25 +16,21 @@
 
 <!--
   Esta página espelha a função alterar_status() do Python, que trata
-  DUAS ações diferentes dentro da mesma tela:
-    1 - Status de aluguel (alugar ou devolver)
-    2 - Status de dano (marcar/desmarcar)
+  três situações dentro da mesma tela:
 
-  Assim como no terminal, o usuário escolhe a ação com um grupo de opções
-  (no Python era um menu numerado; aqui usamos radio buttons, que é o
-  equivalente em formulário HTML para "escolher 1 entre várias opções").
+    Alugar   - pede cliente e dias. A contagem da inspeção semanal começa aqui.
+    Devolver - faz a INSPEÇÃO FINAL (km, mecânica, avarias) e emite a fatura:
+               diárias + avarias + multas do cliente. Manutenção mecânica é
+               custo da locadora e não entra na fatura.
+    Dano     - marca/desmarca dano. Se o veículo está alugado, o valor da avaria
+               é cobrado do cliente e o aluguel continua.
 
-  Os campos "Cliente" e "Dias de aluguel" só fazem sentido quando a ação
-  escolhida for "Alugar" — no Python isso é tratado com um "if not
-  veiculo.alugado". Aqui, por enquanto, os campos ficam sempre visíveis;
-  quando o formulário for conectado ao backend, a validação de qual campo
-  é obrigatório em cada caso é feita no Python, igual você já faz hoje.
-  (Opcionalmente, dá pra usar JavaScript no futuro para mostrar/esconder
-  esses campos dinamicamente conforme a opção escolhida — não é
-  necessário agora.)
+  Cada bloco só aparece para a ação escolhida (condicional.js), e os campos
+  marcados com data-obrigatorio só são obrigatórios enquanto estão visíveis.
+  Sem JavaScript, todos os blocos ficam visíveis e o Python valida.
 -->
 
-<form>
+<form class="form-largo" action="/alterar-status" method="post">
 
 <div class="campo">
 <label for="veiculo">Veículo:</label>
@@ -67,9 +63,11 @@ Marcar/desmarcar dano
 </label>
 </fieldset>
 
+<!-- ───── ALUGAR ───── -->
+<div class="bloco-condicional" data-mostrar-quando="acao=alugar">
 <div class="campo">
-<label for="cliente">Cliente (necessário apenas ao alugar):</label>
-<select id="cliente" name="cliente">
+<label for="cliente">Cliente:</label>
+<select id="cliente" name="cliente" data-obrigatorio>
 <option value="">Selecione um cliente</option>
 <!--
     {% for c in clientes %}
@@ -80,8 +78,121 @@ Marcar/desmarcar dano
 </div>
 
 <div class="campo">
-<label for="dias">Dias de aluguel (necessário apenas ao alugar):</label>
-<input type="number" id="dias" name="dias" min="1">
+<label for="dias">Dias de aluguel:</label>
+<input type="number" id="dias" name="dias" min="1" data-obrigatorio>
+</div>
+
+<div class="aviso">
+<p>A <strong>inspeção semanal é obrigatória</strong>: a primeira vence 7 dias depois do início do aluguel.</p>
+</div>
+</div>
+
+<!-- ───── DEVOLVER: inspeção final ───── -->
+<div class="bloco-condicional" data-mostrar-quando="acao=devolver">
+<div class="aviso">
+<p>A devolução inclui a <strong>inspeção final</strong>. Ao confirmar, a fatura do cliente é emitida
+(diárias + avarias + multas).</p>
+</div>
+
+<div class="campo">
+<label for="km">Quilometragem na devolução:</label>
+<input type="number" id="km" name="km" min="0" step="1" inputmode="numeric" data-obrigatorio>
+</div>
+
+<fieldset>
+<legend>Avaliação mecânica <span class="selo selo-locadora">Custo da locadora</span></legend>
+<div class="item-avaliacao">
+<p class="item-titulo">Óleo (nível/troca)</p>
+<label class="opcao-radio">
+<input type="radio" name="oleo" value="ok" checked>
+OK
+</label>
+<label class="opcao-radio">
+<input type="radio" name="oleo" value="troca">
+Precisa de troca/reparo
+</label>
+<div class="campo" data-mostrar-quando="oleo=troca">
+<label for="custo-oleo">Custo do serviço (R$):</label>
+<input type="number" id="custo-oleo" name="custo_oleo" min="0" step="0.01" inputmode="decimal" data-obrigatorio>
+</div>
+</div>
+<div class="item-avaliacao">
+<p class="item-titulo">Pneus</p>
+<label class="opcao-radio">
+<input type="radio" name="pneus" value="ok" checked>
+OK
+</label>
+<label class="opcao-radio">
+<input type="radio" name="pneus" value="troca">
+Precisa de troca/reparo
+</label>
+<div class="campo" data-mostrar-quando="pneus=troca">
+<label for="custo-pneus">Custo do serviço (R$):</label>
+<input type="number" id="custo-pneus" name="custo_pneus" min="0" step="0.01" inputmode="decimal" data-obrigatorio>
+</div>
+</div>
+<div class="item-avaliacao">
+<p class="item-titulo">Peças mecânicas</p>
+<label class="opcao-radio">
+<input type="radio" name="pecas" value="ok" checked>
+OK
+</label>
+<label class="opcao-radio">
+<input type="radio" name="pecas" value="troca">
+Precisa de troca/reparo
+</label>
+<div class="campo" data-mostrar-quando="pecas=troca">
+<label for="custo-pecas">Custo do serviço (R$):</label>
+<input type="number" id="custo-pecas" name="custo_pecas" min="0" step="0.01" inputmode="decimal" data-obrigatorio>
+</div>
+</div>
+</fieldset>
+
+<fieldset>
+<legend>Avarias <span class="selo selo-cliente">Custo do cliente</span></legend>
+<p class="item-titulo">Há amassados, riscos ou quebras causados durante o aluguel?</p>
+<label class="opcao-radio">
+<input type="radio" name="avaria" value="nao" checked>
+Não
+</label>
+<label class="opcao-radio">
+<input type="radio" name="avaria" value="sim">
+Sim
+</label>
+
+<div class="bloco-condicional" data-mostrar-quando="avaria=sim">
+<div class="campo">
+<label for="avaria-descricao">Descrição da avaria:</label>
+<input type="text" id="avaria-descricao" name="avaria_descricao" data-obrigatorio>
+</div>
+<div class="campo">
+<label for="avaria-valor">Valor a cobrar do cliente (R$):</label>
+<input type="number" id="avaria-valor" name="avaria_valor" min="0" step="0.01" inputmode="decimal" data-obrigatorio>
+</div>
+<label class="opcao-radio">
+<input type="checkbox" name="danificado" value="sim" checked>
+Marcar o veículo como danificado (fica indisponível para novos aluguéis)
+</label>
+</div>
+</fieldset>
+</div>
+
+<!-- ───── DANO ───── -->
+<div class="bloco-condicional" data-mostrar-quando="acao=dano">
+<div class="campo">
+<label for="dano-descricao">Descrição da avaria (se o veículo estiver alugado):</label>
+<input type="text" id="dano-descricao" name="dano_descricao">
+</div>
+
+<div class="campo">
+<label for="dano-valor">Valor a cobrar do cliente (R$):</label>
+<input type="number" id="dano-valor" name="dano_valor" min="0" step="0.01" inputmode="decimal">
+</div>
+
+<div class="aviso">
+<p>Se o veículo está <strong>alugado</strong>, a avaria é cobrada do cliente e o aluguel continua.
+Sem aluguel ativo, não há cobrança. Se o veículo já está danificado, esta ação o libera (reparo concluído).</p>
+</div>
 </div>
 
 <button type="submit">Confirmar</button>
@@ -93,7 +204,8 @@ Marcar/desmarcar dano
 <p class="destaque"><a href="index.html">Voltar ao menu principal</a></p>
 </footer>
 
-<script src="alterarstatus.js"></script>
+<!-- Scripts no fim do body: o HTML já existe quando eles rodam -->
+<script src="condicional.js"></script>
 <script src="validacao.js"></script>
 </body>
 </html>

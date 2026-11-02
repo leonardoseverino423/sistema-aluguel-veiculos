@@ -1,77 +1,241 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Sistema de gerenciamento de locação de veículos — projeto de estudo.">
-<meta name="author" content="LeonardoSeverino">
-<title>Início — Locadora de Veículos</title>
-<link rel="stylesheet" href="aluguel.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+        content="Sistema de gerenciamento de locação de veículos. Controle veículos, clientes e informações financeiras em um só lugar.">
+
+    <meta name="author" content="LeonardoSeverino">
+    <meta name="theme-color" content="#070b19">
+
+    <title>Início — Locadora de Veículos</title>
+
+    <!-- Tipografia -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="aluguel.css">
 </head>
+
 <body>
-<header>
-<h1>Início</h1>
 
-<div class="banner"> <!-- div é para agrupar os elementos do banner (nav do site) -->
-<nav aria-label="Menu do site">
-<ul class="nav-site">
-<li><a href="inicio.html" aria-current="page">Início</a></li>
-<li><a href="index.html">Gerenciador</a></li>
-<li><a href="contato.html">Contato</a></li>
-</ul>
-</nav>
-</header>
+    <!-- Cabeçalho -->
+    <header class="site-header">
 
-<main>
+        <div class="site-header__brand">
+            <h1 class="site-header__title">
+                Locadora de Veículos
+            </h1>
+        </div>
 
-<section class="hero">
-<p>Um sistema simples e organizado para gerenciar os alugueis dos veículos:
-cadastro de carros e clientes, controle de status e relatórios financeiros,
-tudo em um só lugar.</p>
+        <!-- Navegação principal -->
+        <div class="site-header__navigation">
 
-<!--
-  Substitua o src abaixo pelo caminho real de uma imagem sua
-  (ex: "imagens/carros.jpg", se você já tem essa pasta no projeto).
-  Por enquanto, sem uma imagem real, essa tag fica comentada para não
-  quebrar o layout com um ícone de "imagem não encontrada".
+            <nav class="site-nav" aria-label="Menu principal">
 
-<img src="imagens/carros.jpg" alt="Frota de veículos disponíveis para locação">
--->
+                <ul class="site-nav__list">
 
-<a href="index.html" class="botao-cta">Acessar o gerenciador</a>
-</section>
+                    <li class="site-nav__item">
+                        <a href="inicio.html"
+                            class="site-nav__link"
+                            aria-current="page">
+                            Início
+                        </a>
+                    </li>
 
-<section>
-<h2>O que você pode fazer aqui</h2>
-<div class="info-cards">
+                    <li class="site-nav__item">
+                        <a href="index.html" class="site-nav__link">
+                            Gerenciador
+                        </a>
+                    </li>
 
-  <div class="info-card">
-    <span class="icone">🚗</span>
-    <h3>Veículos</h3>
-    <img src="img/img_veiculo.jpeg" alt="Imagem de veículos">
-    <p>Cadastre, edite, busque e acompanhe o status de toda a frota.</p>
-  </div>
+                    <li class="site-nav__item">
+                        <a href="contato.html" class="site-nav__link">
+                            Contato
+                        </a>
+                    </li>
 
-  <div class="info-card">
-    <span class="icone">🧾</span>
-    <h3>Clientes</h3>
-    <img src="img/img_clientes.jpeg" alt="Imagem de clientes">
-    <p>Mantenha um cadastro completo de quem aluga com você.</p>
-  </div>
+                </ul>
 
-  <div class="info-card">
-    <span class="icone">💰</span>
-    <h3>Financeiro</h3>
-    <img src="/img/img_financeiro.jpeg" alt="Imagem de financeiro">
-    <p>Consulte o histórico de aluguéis e o total arrecadado.</p>
-  </div>
-</div>
-</section>
+            </nav>
 
-</main>
+        </div>
 
-<footer>
-<p class="destaque">Projeto em desenvolvimento, com fins de estudo.</p>
-</footer>
+    </header>
+
+
+    <!-- Conteúdo principal -->
+    <main class="main-content">
+
+        <!-- Apresentação principal -->
+        <section class="hero" aria-labelledby="hero-title">
+
+            <div class="hero__content">
+
+                <span class="hero__eyebrow">
+                    GESTÃO INTELIGENTE
+                </span>
+
+                <h2 class="hero__title" id="hero-title">
+                    Gestão da sua locadora em um só lugar
+                </h2>
+
+                <p class="hero__description">
+                    Um sistema simples e organizado para gerenciar
+                    os aluguéis de veículos. Cadastre clientes,
+                    acompanhe sua frota e consulte informações
+                    financeiras de maneira prática.
+                </p>
+
+                <a href="index.html" class="button button--primary">
+                    Acessar o gerenciador
+                    <span class="button__icon" aria-hidden="true">→</span>
+                </a>
+
+            </div>
+
+            <div class="hero__decoration" aria-hidden="true"></div>
+
+        </section>
+
+
+        <!-- Recursos do sistema -->
+        <section class="resources" aria-labelledby="resources-title">
+
+            <header class="resources__header">
+
+                <span class="resources__eyebrow">
+                    FUNCIONALIDADES
+                </span>
+
+                <h2 class="resources__title" id="resources-title">
+                    Conheça os recursos do sistema
+                </h2>
+
+                <p class="resources__description">
+                    Tenha as principais ferramentas da sua
+                    locadora organizadas em um único ambiente.
+                </p>
+
+            </header>
+
+
+            <div class="resource-grid">
+
+                <!-- Gestão de veículos -->
+                <article class="resource-card">
+
+                    <div class="resource-card__image-wrapper">
+
+                        <img
+                            class="resource-card__image"
+                            src="img/img_veiculo.jpeg"
+                            alt="Veículos disponíveis para locação"
+                            loading="lazy"
+                            decoding="async">
+
+                    </div>
+
+                    <div class="resource-card__content">
+
+                        <h3 class="resource-card__title">
+                            Gestão de veículos
+                        </h3>
+
+                        <p class="resource-card__description">
+                            Cadastre veículos, consulte a frota,
+                            atualize informações e acompanhe
+                            a disponibilidade de cada automóvel.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <!-- Gestão de clientes -->
+                <article class="resource-card">
+
+                    <div class="resource-card__image-wrapper">
+
+                        <img
+                            class="resource-card__image"
+                            src="img/img_clientes.jpeg"
+                            alt="Atendimento e relacionamento com clientes"
+                            loading="lazy"
+                            decoding="async">
+
+                    </div>
+
+                    <div class="resource-card__content">
+
+                        <h3 class="resource-card__title">
+                            Gestão de clientes
+                        </h3>
+
+                        <p class="resource-card__description">
+                            Organize os dados dos clientes,
+                            consulte cadastros e mantenha
+                            as informações sempre atualizadas.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <!-- Controle financeiro -->
+                <article class="resource-card">
+
+                    <div class="resource-card__image-wrapper">
+
+                        <img
+                            class="resource-card__image"
+                            src="img/img_financeiro.jpeg"
+                            alt="Controle e planejamento financeiro"
+                            loading="lazy"
+                            decoding="async">
+
+                    </div>
+
+                    <div class="resource-card__content">
+
+                        <h3 class="resource-card__title">
+                            Controle financeiro
+                        </h3>
+
+                        <p class="resource-card__description">
+                            Consulte o histórico de aluguéis,
+                            acompanhe valores e organize
+                            as informações financeiras.
+                        </p>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Rodapé -->
+    <footer class="site-footer">
+
+        <p class="site-footer__notice">
+            Projeto em desenvolvimento, com fins de estudo.
+        </p>
+
+    </footer>
+
 </body>
+
 </html>

@@ -5,51 +5,59 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contato — Locadora de Veículos</title>
 <link rel="stylesheet" href="aluguel.css">
-<link 
 </head>
 <body>
-<header>
-<h1>Contato</h1>
 
-<div class="banner"> <!-- div é para agrupar os elementos do banner (nav do site) -->
-<nav aria-label="Menu do site">
-<ul class="nav-site">
-<li><a href="inicio.html">Início</a></li>
-<li><a href="index.html">Gerenciador</a></li>
-<li><a href="contato.html" aria-current="page">Contato</a></li>
-</ul>
-</nav>
+<header class="site-header">
+  <div class="site-header__brand">
+    <h1 class="site-header__title">Contato</h1>
+  </div>
+
+  <div class="site-header__navigation">
+    <nav class="site-nav" aria-label="Menu do site">
+      <ul class="site-nav__list">
+        <li><a class="site-nav__link" href="inicio.html">Início</a></li>
+        <li><a class="site-nav__link" href="index.html">Gerenciador</a></li>
+        <li><a class="site-nav__link" href="contato.html" aria-current="page">Contato</a></li>
+      </ul>
+    </nav>
+  </div>
 </header>
 
-<main>
+<main class="main-content">
 
-<p>Tem alguma dúvida, sugestão ou encontrou um problema? Preencha o
-formulário abaixo.</p>
+  <p>Tem alguma dúvida, sugestão ou encontrou um problema? Preencha o
+  formulário abaixo.</p>
 
-<!--
-  Este formulário ainda não está conectado a nada — não existe backend
-  por trás dele ainda (nem e-mail, nem banco de dados). Quando o Flask
-  entrar, a rota poderia salvar a mensagem em um arquivo/banco, ou
-  usar um serviço de envio de e-mail.
--->
-<form>
-<label for="nome">Nome:</label>
-<input type="text" id="nome" name="nome" required>
+  <!--
+    Este formulário ainda não está conectado a nada — não existe backend
+    por trás dele ainda (nem e-mail, nem banco de dados). Quando o Flask
+    entrar, a rota poderia salvar a mensagem em um arquivo/banco, ou
+    usar um serviço de envio de e-mail.
+  -->
+  <form>
+    <div class="campo">
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" name="nome" required>
+    </div>
 
-<label for="email">E-mail:</label>
-<input type="email" id="email" name="email" required>
+    <div class="campo">
+      <label for="email">E-mail:</label>
+      <input type="email" id="email" name="email" required>
+    </div>
 
-<label for="mensagem">Mensagem:</label>
-<textarea id="mensagem" name="mensagem" rows="5" required></textarea>
+    <div class="campo">
+      <label for="mensagem">Mensagem:</label>
+      <textarea id="mensagem" name="mensagem" rows="5" required></textarea>
+    </div>
 
-<button type="submit">Enviar</button>
-</form>
+    <button type="submit">Enviar</button>
+  </form>
 
 </main>
 
-<footer>
-<p class="destaque">Projeto em desenvolvimento, com fins de estudo.</p>
+<footer class="site-footer">
+  <p class="site-footer__notice">Projeto em desenvolvimento, com fins de estudo.</p>
 </footer>
-<script src="validacao.js"></script>
 </body>
 </html>

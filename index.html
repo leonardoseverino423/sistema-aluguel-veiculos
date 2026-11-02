@@ -12,68 +12,84 @@
 <link rel="stylesheet" href="aluguel.css">
 </head>
 <body>
-<!-- header é para o título principal da página -->
-<header>
-<h1>Gerenciador de Locadora de Veículos</h1>
+
+<header class="site-header">
+  <div class="site-header__brand">
+    <h1 class="site-header__title">Gerenciador de Locadora de Veículos</h1>
+  </div>
+
+  <div class="site-header__navigation">
+    <nav class="site-nav" aria-label="Menu do site">
+      <ul class="site-nav__list">
+        <li><a class="site-nav__link" href="inicio.html">Início</a></li>
+        <li><a class="site-nav__link" href="index.html" aria-current="page">Gerenciador</a></li>
+        <li><a class="site-nav__link" href="contato.html">Contato</a></li>
+      </ul>
+    </nav>
+  </div>
 </header>
 
-<div class="banner"> <!-- div é para agrupar os elementos do banner (nav do site) -->
-<nav aria-label="Menu do site">
-<ul class="nav-site">
-<li><a href="inicio.html">Início</a></li>
-<li><a href="index.html" aria-current="page">Gerenciador</a></li>
-<li><a href="contato.html">Contato</a></li>
-</ul>
-</nav>
-</div>
+<main class="main-content">
+  <p>Bem-vindo ao gerenciador de locação de veículos!
+     Aqui, você tem controle total: cadastre, consulte,
+     atualize ou exclua informações sobre os veículos disponíveis,
+     além de gerenciar clientes e emitir relatórios.</p>
 
-<main>
-<p>Bem-vindo ao gerenciador de locação de veículos!
-    Aqui, você tem controle total: cadastre, consulte,
-    atualize ou exclua informações sobre os veículos disponíveis, 
-    além de gerenciar clientes e emitir relatórios.</p>
+  <nav aria-label="Categorias do sistema">
+    <div class="menu-grid">
 
-<nav aria-label="Categorias do sistema">
-<!-- Categoria: Veículos -->
-<div class="menu-category">
-<h2>VEÍCULOS</h2>
-<ul>
-<li><a href="cadastrarveiculo.html">Cadastrar veículo</a></li>
-<li><a href="consultarfrota.html">Consultar frota</a></li>
-<li><a href="alterarstatus.html">Alterar status</a></li>
-<li><a href="editarveiculo.html">Editar veículo</a></li>
-<li><a href="removerveiculo.html">Remover veículo</a></li>
-<li><a href="buscarplaca.html">Buscar por placa</a></li>
-<li><a href="filtrarveiculos.html">Filtrar veículos</a></li>
-</ul>
-<!-- div serve para agrupar os itens do menu --> 
-</div>
+      <!-- Categoria: Veículos -->
+      <div class="menu-category">
+        <h2>VEÍCULOS</h2>
+        <ul>
+          <li><a href="cadastrarveiculo.html">Cadastrar veículo</a></li>
+          <li><a href="listarfrota.html">Consultar frota</a></li>
+          <li><a href="alterarstatus.html">Alterar status</a></li>
+          <li><a href="editarveiculo.html">Editar veículo</a></li>
+          <li><a href="removerveiculo.html">Remover veículo</a></li>
+          <li><a href="buscarplaca.html">Buscar por placa</a></li>
+          <li><a href="filtrarveiculos.html">Filtrar veículos</a></li>
+        </ul>
+      </div>
 
-<!-- Categoria: Clientes -->
-<div class="menu-category">
-<h2>CLIENTES</h2>
-<ul>
-<li><a href="cadastrarcliente.html">Cadastrar cliente</a></li>
-<li><a href="consultarclientes.html">Consultar clientes</a></li>
-<li><a href="editarcliente.html">Editar cliente</a></li>
-<li><a href="removercliente.html">Remover cliente</a></li>
-<li><a href="buscarcpf.html">Buscar por CPF</a></li>
-</ul>
-</div>
+      <!-- Categoria: Clientes -->
+      <div class="menu-category">
+        <h2>CLIENTES</h2>
+        <ul>
+          <li><a href="cadastrarcliente.html">Cadastrar cliente</a></li>
+          <li><a href="consultarclientes.html">Consultar clientes</a></li>
+          <li><a href="editarcliente.html">Editar cliente</a></li>
+          <li><a href="removercliente.html">Remover cliente</a></li>
+          <li><a href="buscarcpf.html">Buscar por CPF</a></li>
+        </ul>
+      </div>
 
-<!-- Categoria: Financeiro -->
-<div class="menu-category">
-<h2>FINANCEIRO</h2>
-<ul>
-<li><a href="historicoalugueis.html">Histórico de aluguéis</a></li>
-<li><a href="consultarcliente.html">Consultar por cliente</a></li>
-</ul>
-</div>
-</nav>
+      <!-- Categoria: Inspeção e multas -->
+      <div class="menu-category">
+        <h2>INSPEÇÃO E MULTAS</h2>
+        <ul>
+          <li><a href="registrarinspecao.html">Registrar inspeção semanal</a></li>
+          <li><a href="inspecoespendentes.html">Inspeções pendentes</a></li>
+          <li><a href="registrarmulta.html">Registrar multa de trânsito</a></li>
+        </ul>
+      </div>
+
+      <!-- Categoria: Financeiro -->
+      <div class="menu-category">
+        <h2>FINANCEIRO</h2>
+        <ul>
+          <li><a href="financeiro.html">Resumo financeiro</a></li>
+          <li><a href="historicoalugueis.html">Histórico de aluguéis</a></li>
+          <li><a href="faturacliente.html">Fatura por cliente</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </nav>
 </main>
 
-<footer>
-<p class="destaque">Projeto em desenvolvimento, com fins de estudo.</p>
+<footer class="site-footer">
+  <p class="site-footer__notice">Projeto em desenvolvimento, com fins de estudo.</p>
 </footer>
 </body>
 </html>

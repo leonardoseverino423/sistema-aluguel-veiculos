@@ -17,56 +17,69 @@
 <!--
   Esta tabela ainda tem dados de EXEMPLO, escritos direto no HTML.
   Quando o Python estiver integrado (ex: via Flask + Jinja2), cada <tr>
-  vai ser gerada automaticamente a partir de repo_frota, com algo como:
+  vai ser gerada automaticamente a partir da lista de clientes, com algo como:
 
-      {% for v in veiculos %}
-      <tr class="{{ 'status-danificado' if v.danificado else ('status-alugado' if v.alugado else 'status-disponivel') }}">
-        <td>{{ v.marca }} {{ v.modelo }}</td>
-        <td>{{ v.ano }}</td>
-        <td>{{ v.placa }}</td>
-        <td>{{ v.quilometragem }} km</td>
-        <td>R$ {{ "%.2f"|format(v.preco_dia) }}</td>
-        <td>{{ 'Danificado' if v.danificado else ('Alugado - ' ~ v.cliente_nome if v.alugado else 'Disponível') }}</td>
+      {% for c in clientes %}
+      <tr>
+        <td>{{ c.nome }}</td>
+        <td>{{ c.cpf_mascarado }}</td>
+        <td>{{ c.telefone }}</td>
+        <td>{{ c.veiculo_atual or '—' }}</td>
+        <td class="valor">{% if c.aluguel_ativo %}R$ {{ "%.2f"|format(c.total_a_cobrar) }}{% else %}—{% endif %}</td>
+        <td>
+          {% if c.aluguel_ativo %}
+            <span class="selo selo-ok">Aluguel ativo</span>
+          {% else %}
+            <span class="selo selo-neutro">Sem aluguel</span>
+          {% endif %}
+        </td>
       </tr>
       {% endfor %}
+
+  "Total a cobrar" é o total do aluguel EM ANDAMENTO (diárias + avarias + multas
+  até agora). Aluguéis encerrados aparecem em historicoalugueis.html.
+  O sistema ainda não sabe se o cliente já pagou: o controle de pagamento
+  ("Em dia" / "Em aberto") fica para a v0.7, na fase de dados.
+
+  O CPF aparece mascarado na lista; o CPF completo fica na busca por CPF.
 -->
 <table>
-  <thead>
-    <tr>
-      <th>Veículo</th>
-      <th>Ano</th>
-      <th>Placa</th>
-      <th>Quilometragem</th>
-      <th>Preço/dia</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr class="status-disponivel">
-      <td>Toyota Corolla</td>
-      <td>2022</td>
-      <td>ABC1D23</td>
-      <td>15.000 km</td>
-      <td>R$ 150,00</td>
-      <td>Disponível</td>
-    </tr>
-    <tr class="status-alugado">
-      <td>Honda Civic</td>
-      <td>2021</td>
-      <td>DEF4G56</td>
-      <td>32.500 km</td>
-      <td>R$ 140,00</td>
-      <td>Alugado — João Silva</td>
-    </tr>
-    <tr class="status-danificado">
-      <td>Fiat Argo</td>
-      <td>2020</td>
-      <td>HIJ7K89</td>
-      <td>48.200 km</td>
-      <td>R$ 110,00</td>
-      <td>Danificado</td>
-    </tr>
-  </tbody>
+<thead>
+<tr>
+<th>Cliente</th>
+<th>CPF</th>
+<th>Telefone</th>
+<th>Veículo atual</th>
+<th class="valor">Total a cobrar</th>
+<th>Situação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>João Silva</td>
+<td>***.456.789-**</td>
+<td>(32) 99999-0000</td>
+<td>—</td>
+<td class="valor">—</td>
+<td><span class="selo selo-neutro">Sem aluguel</span></td>
+</tr>
+<tr>
+<td>Maria Souza</td>
+<td>***.654.321-**</td>
+<td>(32) 98888-1111</td>
+<td>ABC1D23</td>
+<td class="valor">R$ 800,00</td>
+<td><span class="selo selo-ok">Aluguel ativo</span></td>
+</tr>
+<tr>
+<td>Ana Lima</td>
+<td>***.111.222-**</td>
+<td>(32) 97777-2222</td>
+<td>HIJ7K89</td>
+<td class="valor">R$ 550,00</td>
+<td><span class="selo selo-ok">Aluguel ativo</span></td>
+</tr>
+</tbody>
 </table>
 
 </main>
