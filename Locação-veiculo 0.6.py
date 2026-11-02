@@ -15,6 +15,8 @@ ARQUIVO_INSPECOES   = "inspecoes.json"
 # ─────────────────────────────────────────
 
 # Regra 1: o locatário deve levar o veículo à locadora 1 vez por semana.
+VALOR_MAXIMO = 1_000_000        # teto de sanidade para qualquer valor digitado (R$)
+DIAS_MAXIMO_ALUGUEL = 365      # um aluguel mais longo que isso provavelmente é erro de digitação
 INTERVALO_INSPECAO_DIAS = 7
 
 # Regra 2: quem paga cada tipo de custo.
@@ -378,6 +380,19 @@ def migrar_dados_antigos():
     para que aluguéis já em andamento passem a seguir as novas regras."""
     mudou = False
 
+    # CPFs gravados antes da v0.5 podem ter pontos e traço: deixa só números,
+    # senão a busca e a fatura por CPF não encontram esses clientes.
+    for c in clientes:
+        limpo = normalizar_cpf(c.cpf)
+        if limpo != c.cpf:
+            c.cpf = limpo
+            mudou = True
+    for a in alugueis:
+        limpo = normalizar_cpf(a.cliente_cpf)
+        if limpo != a.cliente_cpf:
+            a.cliente_cpf = limpo
+            mudou = True
+
     for a in alugueis:
         if a.id is None:
             a.id = proximo_id(alugueis)
@@ -400,6 +415,7 @@ def migrar_dados_antigos():
             mudou = True
 
     if mudou:
+        salvar_clientes()
         salvar_alugueis()
         salvar_frota()
 
@@ -415,29 +431,46 @@ def ler_texto_obrigatorio(mensagem):
             return valor
         print("Este campo não pode ficar vazio.\n")
 
-def ler_float(mensagem):
-    while True:
-        try:
-            # aceita vírgula como separador decimal (150,50)
-            return float(input(mensagem).replace(",", "."))
-        except ValueError:
-            print("Digite um valor numérico válido.\n")
+def converter_dinheiro(texto):
+    """Converte um valor digitado em reais para float, ou devolve None se for inválido.
+    Aceita: 1500   1500,50   1500.50   1.500   1.500,50   R$ 1.500,50
+    Recusa: nan, inf, 1e3 e qualquer coisa que não seja um valor em reais.
+    Regra do ponto: com 3 dígitos depois dele ("1.500") é separador de milhar;
+    com 1 ou 2 dígitos ("150.50") é decimal."""
+    texto = texto.strip().replace("R$", "").replace(" ", "")
+    if re.fullmatch(r'-?\d+([.,]\d{1,2})?', texto):
+        return float(texto.replace(",", "."))
+    if re.fullmatch(r'-?\d{1,3}(\.\d{3})+(,\d{1,2})?', texto):
+        return float(texto.replace(".", "").replace(",", "."))
+    return None
 
-def ler_dinheiro(mensagem):
-    """Valor em reais, sem aceitar negativo."""
+def ler_dinheiro(mensagem, permitir_zero=True):
+    """Valor em reais: formato brasileiro, nunca negativo e com teto de sanidade."""
     while True:
-        valor = ler_float(mensagem)
-        if valor < 0:
+        valor = converter_dinheiro(input(mensagem))
+        if valor is None:
+            print("Digite um valor em reais válido (ex.: 150,50 ou 1.500,00).\n")
+        elif valor < 0:
             print("O valor não pode ser negativo.\n")
+        elif valor == 0 and not permitir_zero:
+            print("O valor precisa ser maior que zero.\n")
+        elif valor > VALOR_MAXIMO:
+            print(f"Valor alto demais (máximo R$ {VALOR_MAXIMO:,.2f}). Confira a digitação.\n"
+                  .replace(",", "X").replace(".", ",").replace("X", "."))
         else:
             return round(valor, 2)
 
-def ler_int(mensagem):
+def ler_dias(mensagem):
+    """Dias de aluguel: inteiro de 1 até DIAS_MAXIMO_ALUGUEL."""
     while True:
         try:
-            return int(input(mensagem))
+            dias = int(input(mensagem))
         except ValueError:
             print("Digite um número inteiro válido.\n")
+            continue
+        if 1 <= dias <= DIAS_MAXIMO_ALUGUEL:
+            return dias
+        print(f"O aluguel precisa ter de 1 a {DIAS_MAXIMO_ALUGUEL} dias.\n")
 
 def ler_km(mensagem):
     """Quilometragem: aceita 15000 ou 15.000."""
@@ -492,7 +525,7 @@ def cadastrar_veiculo():
         else:
             break
 
-    preco_dia = ler_dinheiro("Preço por dia (R$): ")
+    preco_dia = ler_dinheiro("Preço por dia (R$): ", permitir_zero=False)
     frota.append(Veiculo(marca, modelo, ano, cor, placa,
                          quilometragem, renavam, preco_dia))
     salvar_frota()
@@ -554,10 +587,11 @@ def editar_veiculo():
 
     novo_preco = input(f"Preço por dia [{veiculo.preco_dia:.2f}]: ").strip()
     if novo_preco:
-        try:
-            veiculo.preco_dia = float(novo_preco.replace(",", "."))
-        except ValueError:
+        valor = converter_dinheiro(novo_preco)
+        if valor is None or valor <= 0 or valor > VALOR_MAXIMO:
             print("Valor inválido, preço não alterado.")
+        else:
+            veiculo.preco_dia = round(valor, 2)
 
     salvar_frota()
     print("Veículo atualizado!\n")
@@ -704,25 +738,34 @@ def realizar_inspecao(veiculo, aluguel, tipo):
 
     # 2. Manutenção mecânica: desgaste natural, custo da LOCADORA
     print("\nAvaliação mecânica (custo da LOCADORA):")
+    # Os custos só são gravados no FIM da inspeção: se o programa for fechado
+    # (Ctrl+C) no meio, nenhuma cobrança parcial fica registrada.
+    custos = []
     mecanica = {}
     for chave, nome in ITENS_MECANICOS:
         precisa = ler_sim_nao(f"{nome} precisa de troca/reparo? (s/n): ")
         mecanica[chave] = "TROCA/REPARO" if precisa else "OK"
         if precisa:
             custo = ler_dinheiro(f"  Custo do serviço - {nome} (R$): ")
-            lancar(aluguel, veiculo.placa, "manutencao", nome, custo)
+            custos.append(("manutencao", nome, custo))
 
     # 3. Avarias: amassados, riscos, quebras causados no aluguel, custo do CLIENTE
     avarias = ""
+    marcar_danificado = False
     if ler_sim_nao("\nHá avarias (amassados, riscos, quebras)? (s/n): "):
         avarias = ler_texto_obrigatorio("Descrição da avaria: ")
         valor   = ler_dinheiro("Valor a cobrar do cliente (R$): ")
-        lancar(aluguel, veiculo.placa, "avaria", avarias, valor)
-        print(f"Avaria cobrada de {aluguel.cliente_nome}.")
-        if ler_sim_nao("Marcar o veículo como danificado (indisponível para novos aluguéis)? (s/n): "):
-            veiculo.danificado = True
+        custos.append(("avaria", avarias, valor))
+        marcar_danificado = ler_sim_nao(
+            "Marcar o veículo como danificado (indisponível para novos aluguéis)? (s/n): ")
 
-    # 4. Atualiza o veículo e guarda o histórico
+    # 4. Tudo respondido: agora sim grava custos, veículo e histórico
+    for tipo_custo, descricao, valor_custo in custos:
+        lancar(aluguel, veiculo.placa, tipo_custo, descricao, valor_custo)
+        if tipo_custo == "avaria":
+            print(f"Avaria cobrada de {aluguel.cliente_nome}.")
+    if marcar_danificado:
+        veiculo.danificado = True
     veiculo.quilometragem   = km
     veiculo.ultima_inspecao = hoje().isoformat()
 
@@ -888,8 +931,8 @@ def alterar_status():
                 idx_c   = int(input("Número do cliente: "))
                 cliente = clientes[idx_c]
 
-                veiculo.dias_aluguel = ler_int("Quantos dias de aluguel? ")
-                total                = veiculo.preco_dia * veiculo.dias_aluguel
+                veiculo.dias_aluguel = ler_dias("Quantos dias de aluguel? ")
+                total                = round(veiculo.preco_dia * veiculo.dias_aluguel, 2)
 
                 registro = Aluguel(
                     cliente_nome      = cliente.nome,
@@ -1035,6 +1078,9 @@ def editar_cliente():
         novo = input(f"{prompt} [{atual}]: ").strip()
         return novo if novo else atual
 
+    cpf_antigo  = cliente.cpf
+    nome_antigo = cliente.nome
+
     cliente.nome     = atualizar("Nome",     cliente.nome)
     cliente.cnh      = atualizar("CNH",      cliente.cnh)
     cliente.telefone = atualizar("Telefone", cliente.telefone)
@@ -1052,6 +1098,26 @@ def editar_cliente():
             break
 
     salvar_clientes()
+
+    # O histórico é ligado ao cliente pelo CPF. Se o CPF ou o nome mudou,
+    # os aluguéis antigos precisam acompanhar, senão a fatura e a trava de
+    # remoção deixam de enxergar esse cliente.
+    if cliente.cpf != cpf_antigo or cliente.nome != nome_antigo:
+        ids = set()
+        for a in alugueis:
+            if a.cliente_cpf == cpf_antigo:
+                a.cliente_cpf  = cliente.cpf
+                a.cliente_nome = cliente.nome
+                ids.add(a.id)
+        for i in inspecoes:
+            if i.aluguel_id in ids:
+                i.cliente_nome = cliente.nome
+        for v in frota:
+            if v.alugado and v.aluguel_id in ids:
+                v.cliente = cliente.nome
+        salvar_alugueis()
+        salvar_inspecoes()
+        salvar_frota()
     print("Cliente atualizado!\n")
 
 # função para remover um cliente da lista, com confirmação do usuário
