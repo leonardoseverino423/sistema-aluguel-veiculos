@@ -1404,3 +1404,10 @@ body > main:not(.main-content) {
 :is(.main-content, body > main:not(.main-content)) > p + nav {
     margin-top: var(--space-6);
 }
+
+
+/* Cabeçalho sem menu de navegação (páginas internas): todos os cantos arredondados */
+
+.site-header__brand:only-child {
+    border-radius: var(--radius-lg);
+}
